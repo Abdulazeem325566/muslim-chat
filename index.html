@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Ummah Chat — Muslim Community</title>
+<link rel="stylesheet" href="css/styles.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+<!-- Setup notice (shown only if Supabase is not configured) -->
+<div id="setup-notice" class="setup-notice hidden">
+  ⚙️ Supabase is not configured yet. Open <code>js/config.js</code> and paste your
+  project URL + anon key — setup steps are in <code>README.md</code>.
+</div>
+
+<!-- ============ AUTH VIEW ============ -->
+<div id="auth-view" class="auth-view hidden">
+  <div class="auth-card">
+    <div class="brand">
+      <div class="brand-mark">☪</div>
+      <h1>Ummah Chat</h1>
+      <p>A warm place for Muslims worldwide</p>
+    </div>
+    <div class="auth-tabs">
+      <button id="tab-login" class="auth-tab active">Log in</button>
+      <button id="tab-signup" class="auth-tab">Sign up</button>
+    </div>
+    <form id="auth-form">
+      <div id="username-wrap" class="field hidden">
+        <label for="username">Display name</label>
+        <input id="username" type="text" maxlength="30" placeholder="e.g. Ahmed_Karachi" autocomplete="username">
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" type="email" required placeholder="you@example.com" autocomplete="email">
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input id="password" type="password" required minlength="6" placeholder="Min. 6 characters" autocomplete="current-password">
+      </div>
+      <p id="auth-error" class="auth-error hidden"></p>
+      <button type="submit" id="auth-submit" class="btn-primary">Log in</button>
+    </form>
+    <p class="auth-note">Be kind. No spam, no hate, no sectarian debates — see room guidelines.</p>
+  </div>
+</div>
+
+<!-- ============ APP VIEW ============ -->
+<div id="app-view" class="app hidden">
+  <div id="sidebar-scrim" class="scrim hidden"></div>
+
+  <!-- Sidebar -->
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-mark sm">☪</div>
+      <div>
+        <div class="sidebar-title">Ummah Chat</div>
+        <div class="sidebar-sub" id="me-line">…</div>
+      </div>
+    </div>
+    <div class="sidebar-section">CHAT ROOMS</div>
+    <nav id="room-list" class="room-list"></nav>
+    <div class="sidebar-footer">
+      <button id="account-btn" class="ghost-btn">👤 My account</button>
+      <button id="logout-btn" class="ghost-btn">⎋ Log out</button>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+    <header class="chat-header">
+      <button id="menu-btn" class="icon-btn" aria-label="Rooms">☰</button>
+      <div class="chat-header-info">
+        <div id="room-name" class="chat-room-name">—</div>
+        <div id="room-meta" class="chat-room-meta">—</div>
+      </div>
+      <button id="users-btn" class="icon-btn" aria-label="Online users">👥</button>
+    </header>
+
+    <div id="typing-bar" class="typing-bar hidden"></div>
+    <div id="messages" class="messages"></div>
+
+    <form id="send-form" class="send-bar">
+      <input id="message-input" type="text" maxlength="1000" placeholder="Write a kind message…" autocomplete="off">
+      <button type="submit" class="btn-send" aria-label="Send">➤</button>
+    </form>
+  </main>
+
+  <!-- Online users panel -->
+  <div id="users-scrim" class="scrim hidden"></div>
+  <aside id="users-panel" class="users-panel">
+    <div class="users-head">
+      <strong>Online now</strong>
+      <button id="users-close" class="icon-btn">✕</button>
+    </div>
+    <div id="online-count" class="online-count">0 online</div>
+    <ul id="online-list" class="online-list"></ul>
+    <div class="users-foot">Presence updates live via Supabase Realtime.</div>
+  </aside>
+</div>
+
+<!-- Account modal -->
+<div id="account-modal" class="modal hidden">
+  <div class="modal-card">
+    <h3>My account</h3>
+    <div class="field"><label>Email</label><input id="acc-email" readonly></div>
+    <div class="field"><label>Display name</label><input id="acc-username" readonly></div>
+    <div class="field">
+      <label>User ID <span class="hint">(needed once to make yourself admin — see README)</span></label>
+      <div class="uid-row">
+        <input id="acc-uid" readonly>
+        <button id="copy-uid" class="btn-small" type="button">Copy</button>
+      </div>
+    </div>
+    <button id="account-close" class="btn-primary">Close</button>
+  </div>
+</div>
+
+<div id="toast-wrap" class="toast-wrap"></div>
+
+<script src="js/config.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
